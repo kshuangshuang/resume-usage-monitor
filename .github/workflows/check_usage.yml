@@ -1,0 +1,31 @@
+name: ResumeSDK 剩余用量检查
+
+# 每天北京时间 7:00（UTC 23:00 前一天）执行
+on:
+  schedule:
+    - cron: '0 23 * * *'
+  workflow_dispatch:  # 支持手动触发
+
+jobs:
+  check-usage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: 检查剩余用量
+        env:
+          RESUME_SDK_UID: ${{ secrets.RESUME_SDK_UID }}
+          RESUME_SDK_PWD: ${{ secrets.RESUME_SDK_PWD }}
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+          ALERT_TO: ${{ secrets.ALERT_TO }}
+        run: python check_usage.py
