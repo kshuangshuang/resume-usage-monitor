@@ -21,7 +21,7 @@ from email.mime.text import MIMEText
 
 # ---- 配置 ----
 QUERY_URL = "https://resumesdk.com/api/query_user"
-THRESHOLD = 25000  # 剩余用量阈值，低于此值发送提醒
+THRESHOLD = 5000  # 剩余用量阈值，低于此值发送提醒
 
 
 def query_remaining_usage(uid: str, pwd: str) -> dict:
